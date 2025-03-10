@@ -1,67 +1,44 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #42564F;
-    color: #F7F6E7;
     margin: 0;
     padding: 0;
+    background: #F7F6E7;
 }
 
-.hidden {
+.page {
     display: none;
-}
-
-#welcome-screen {
     height: 100vh;
-    display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-}
-
-#start-btn {
-    padding: 10px 20px;
-    font-size: 18px;
-    background-color: #C0EB6A;
-    border: none;
-    cursor: pointer;
-}
-
-#planner {
-    margin-top: 50px;
-}
-
-#weekdays {
-    display: flex;
     flex-direction: column;
-    align-items: center;
 }
 
-.day-btn {
-    padding: 10px 15px;
-    margin: 5px;
-    font-size: 16px;
-    width: 200px;
-    background-color: #DFDDCS;
+.active {
+    display: flex;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+#bottom-menu {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background: #42564F;
+    padding: 10px 0;
+}
+
+#bottom-menu button {
+    font-size: 24px;
+    background: none;
     border: none;
+    color: white;
     cursor: pointer;
+    padding: 10px;
 }
 
-#workout-section {
-    margin-top: 20px;
-}
-
-#exercise-list {
-    list-style: none;
-    padding: 0;
-}
-
-#exercise-name {
-    padding: 5px;
-}
-
-#add-exercise, #back-btn {
-    padding: 8px 15px;
-    margin-top: 10px;
-    cursor: pointer;
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
