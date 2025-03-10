@@ -1,33 +1,31 @@
-document.getElementById("start-btn").addEventListener("click", function() {
-    document.getElementById("welcome-screen").classList.add("hidden");
-    document.getElementById("app").classList.remove("hidden");
-    loadTodaysWorkout();
+document.addEventListener("DOMContentLoaded", () => {
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const app = document.getElementById("app");
+    const startBtn = document.getElementById("start-btn");
+    const homeBtn = document.getElementById("home-btn");
+    const plannerBtn = document.getElementById("planner-btn");
+    const progressBtn = document.getElementById("progress-btn");
+
+    const homePage = document.getElementById("home-page");
+    const plannerPage = document.getElementById("planner-page");
+    const progressPage = document.getElementById("progress-page");
+
+    // Welcome Screen -> Home
+    startBtn.addEventListener("click", () => {
+        welcomeScreen.classList.add("hidden");
+        app.classList.remove("hidden");
+        homePage.classList.remove("hidden");
+    });
+
+    // Bottom Navigation
+    homeBtn.addEventListener("click", () => showPage(homePage));
+    plannerBtn.addEventListener("click", () => showPage(plannerPage));
+    progressBtn.addEventListener("click", () => showPage(progressPage));
+
+    function showPage(page) {
+        homePage.classList.add("hidden");
+        plannerPage.classList.add("hidden");
+        progressPage.classList.add("hidden");
+        page.classList.remove("hidden");
+    }
 });
-
-function showSection(sectionId) {
-    document.getElementById("home-screen").classList.add("hidden");
-    document.getElementById("weekly-planner").classList.add("hidden");
-    document.getElementById("stats").classList.add("hidden");
-
-    document.getElementById(sectionId).classList.remove("hidden");
-}
-
-function openWorkout(day) {
-    document.getElementById("workout-details").classList.remove("hidden");
-    document.getElementById("workout-details").innerHTML = `<h3>${day}'s Workout 🏋️</h3><p>No exercises added yet.</p>`;
-}
-
-function loadTodaysWorkout() {
-    const workouts = {
-        "Monday": "Squats, Bench Press, Deadlifts",
-        "Tuesday": "Pull-ups, Shoulder Press, Lunges",
-        "Wednesday": "Rest Day! 😴",
-        "Thursday": "Cardio & Core 🏃‍♂️",
-        "Friday": "Leg Day! 🦵",
-        "Saturday": "Arms & Chest 💪",
-        "Sunday": "Active Recovery 🏊‍♂️"
-    };
-
-    const today = new Date().toLocaleDateString('en-US', { weekday: 'long' });
-    document.getElementById("todays-workout").innerText = workouts[today] || "No workout planned.";
-}
