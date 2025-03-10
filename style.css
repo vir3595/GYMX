@@ -1,41 +1,71 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    background-color: #f7f6e7;
     margin: 0;
     padding: 0;
-    background: #F7F6E7;
 }
 
-.page {
-    display: none;
+.hidden { display: none; }
+
+#welcome-screen {
     height: 100vh;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
+    background: linear-gradient(135deg, #42564F, #C0EB6A);
+    color: white;
 }
 
-.active {
-    display: flex;
+#welcome-screen h1 { font-size: 2em; }
+
+#start-btn {
+    padding: 10px 20px;
+    font-size: 1.2em;
+    background: #DFDDCS;
+    border: none;
+    cursor: pointer;
+}
+
+#home-screen, #weekly-planner, #stats {
+    padding: 20px;
     animation: fadeIn 0.5s ease-in-out;
 }
 
-#bottom-menu {
+.days {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.day-btn {
+    margin: 5px;
+    padding: 10px;
+    width: 80%;
+    background: #42564F;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#bottom-nav {
     position: fixed;
     bottom: 0;
     width: 100%;
+    background: #42564F;
     display: flex;
     justify-content: space-around;
-    background: #42564F;
-    padding: 10px 0;
+    padding: 10px;
 }
 
-#bottom-menu button {
-    font-size: 24px;
+#bottom-nav button {
+    font-size: 20px;
     background: none;
     border: none;
     color: white;
     cursor: pointer;
-    padding: 10px;
 }
 
 @keyframes fadeIn {
