@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Planner</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <!-- Welcome Screen -->
+    <div id="welcome-screen" class="screen">
+        <h1>🔥 Push Your Limits 🔥</h1>
+        <p id="motivational-quote">Loading...</p>
+        <button id="start-planning">Start Planning</button>
+    </div>
+
+    <!-- Main Menu -->
+    <div id="main-menu" class="screen hidden">
+        <h2>Select Your Workout Day</h2>
+        <div id="weekdays">
+            <button class="day-btn" data-day="Monday">Monday</button>
+            <button class="day-btn" data-day="Tuesday">Tuesday</button>
+            <button class="day-btn" data-day="Wednesday">Wednesday</button>
+            <button class="day-btn" data-day="Thursday">Thursday</button>
+            <button class="day-btn" data-day="Friday">Friday</button>
+            <button class="day-btn" data-day="Saturday">Saturday</button>
+            <button class="day-btn" data-day="Sunday">Sunday</button>
+        </div>
+        <button id="view-progress">📊 View Progress</button>
+    </div>
+
+    <!-- Workout Planner -->
+    <div id="workout-planner" class="screen hidden">
+        <h2 id="selected-day">Workout Plan</h2>
+        <button id="back-to-menu">⬅️</button>
+        <div id="exercise-list"></div>
+        <button id="add-exercise">➕ Add Exercise</button>
+    </div>
+
+    <!-- Weekly Progress Page -->
+    <div id="progress-page" class="screen hidden">
+        <h2>Weekly Progress</h2>
+        <button id="back-to-menu-progress">⬅️</button>
+        <div id="progress-content"></div>
+    </div>
+
+    <!-- Bottom Navigation Menu -->
+    <div id="bottom-menu">
+        <button id="home-btn">🏠</button>
+        <button id="planner-btn">📝</button>
+        <button id="progress-btn">📊</button>
+    </div>
+</body>
+</html>
