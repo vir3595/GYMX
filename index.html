@@ -3,42 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GYMX</title>
+    <title>GYMX - Workout Planner</title>
     <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
-
-    <!-- Welcome Page -->
-    <div id="welcome-page" class="page active">
-        <h1>Welcome to GYMX</h1>
-        <p id="motivational-quote"></p>
+    <div id="welcome-screen">
+        <h1>🏋️‍♂️ Welcome to GYMX!</h1>
+        <p id="motivational-quote">"Push yourself, because no one else is going to do it for you!"</p>
+        <button id="start-btn">Let's Go! 🚀</button>
     </div>
 
-    <!-- Home Screen -->
-    <div id="home-screen" class="page">
-        <h2>Today's Workout</h2>
-        <div id="quick-stats"></div>
-    </div>
+    <div id="app" class="hidden">
+        <div id="home-screen">
+            <h2>Today's Workout 💪</h2>
+            <p id="todays-workout">Loading...</p>
+        </div>
 
-    <!-- Weekly Planner -->
-    <div id="planner-screen" class="page">
-        <h2>Weekly Workout Planner</h2>
-        <div id="weekday-list"></div>
-    </div>
+        <div id="weekly-planner" class="hidden">
+            <h2>📆 Weekly Workout Planner</h2>
+            <div class="days">
+                <button class="day-btn" onclick="openWorkout('Monday')">Monday</button>
+                <button class="day-btn" onclick="openWorkout('Tuesday')">Tuesday</button>
+                <button class="day-btn" onclick="openWorkout('Wednesday')">Wednesday</button>
+                <button class="day-btn" onclick="openWorkout('Thursday')">Thursday</button>
+                <button class="day-btn" onclick="openWorkout('Friday')">Friday</button>
+                <button class="day-btn" onclick="openWorkout('Saturday')">Saturday</button>
+                <button class="day-btn" onclick="openWorkout('Sunday')">Sunday</button>
+            </div>
+            <div id="workout-details" class="hidden"></div>
+        </div>
 
-    <!-- Stats & Progress -->
-    <div id="stats-screen" class="page">
-        <h2>Workout Stats & Progress</h2>
-        <div id="progress-data"></div>
-    </div>
+        <div id="stats" class="hidden">
+            <h2>📊 Your Progress</h2>
+            <p>Graphs & trends coming soon!</p>
+        </div>
 
-    <!-- Bottom Toggle Menu -->
-    <div id="bottom-menu">
-        <button onclick="navigateTo('home-screen')">🏠</button>
-        <button onclick="navigateTo('planner-screen')">📅</button>
-        <button onclick="navigateTo('stats-screen')">📊</button>
+        <div id="bottom-nav">
+            <button onclick="showSection('home-screen')">🏠</button>
+            <button onclick="showSection('weekly-planner')">📅</button>
+            <button onclick="showSection('stats')">📊</button>
+        </div>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
