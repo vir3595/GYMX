@@ -1,71 +1,45 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const startButton = document.getElementById("start-planning");
-    const weekdays = document.querySelectorAll(".day-btn");
-    const viewProgress = document.getElementById("view-progress");
-    const backToMenu = document.getElementById("back-to-menu");
-    const backToMenuProgress = document.getElementById("back-to-menu-progress");
+document.addEventListener("DOMContentLoaded", () => {
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const planner = document.getElementById("planner");
+    const startBtn = document.getElementById("start-btn");
+    const dayButtons = document.querySelectorAll(".day-btn");
+    const workoutSection = document.getElementById("workout-section");
+    const selectedDayTitle = document.getElementById("selected-day");
+    const exerciseList = document.getElementById("exercise-list");
     const addExerciseBtn = document.getElementById("add-exercise");
-    const homeBtn = document.getElementById("home-btn");
-    const plannerBtn = document.getElementById("planner-btn");
-    const progressBtn = document.getElementById("progress-btn");
+    const exerciseNameInput = document.getElementById("exercise-name");
+    const backBtn = document.getElementById("back-btn");
 
-    const screens = {
-        welcome: document.getElementById("welcome-screen"),
-        menu: document.getElementById("main-menu"),
-        planner: document.getElementById("workout-planner"),
-        progress: document.getElementById("progress-page"),
-    };
+    let currentDay = "";
 
-    // Motivational Quotes
-    const quotes = [
-        "No Pain, No Gain! 💪",
-        "Push Harder Than Yesterday! 🔥",
-        "Your Only Limit Is You! 🚀",
-        "Train Like a Beast, Look Like a Beauty! 🏆"
-    ];
+    // Start button event
+    startBtn.addEventListener("click", () => {
+        welcomeScreen.classList.add("hidden");
+        planner.classList.remove("hidden");
+    });
 
-    function getRandomQuote() {
-        return quotes[Math.floor(Math.random() * quotes.length)];
-    }
-    
-    document.getElementById("motivational-quote").textContent = getRandomQuote();
-
-    // Navigation Handlers
-    function showScreen(screen) {
-        Object.values(screens).forEach(s => s.classList.add("hidden"));
-        screen.classList.remove("hidden");
-    }
-
-    startButton.addEventListener("click", () => showScreen(screens.menu));
-    
-    weekdays.forEach(button => {
-        button.addEventListener("click", function() {
-            document.getElementById("selected-day").textContent = this.dataset.day + " Workout Plan";
-            showScreen(screens.planner);
+    // Click event for day buttons
+    dayButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            currentDay = button.dataset.day;
+            selectedDayTitle.textContent = `Workout for ${currentDay}`;
+            workoutSection.classList.remove("hidden");
         });
     });
 
-    viewProgress.addEventListener("click", () => showScreen(screens.progress));
-    backToMenu.addEventListener("click", () => showScreen(screens.menu));
-    backToMenuProgress.addEventListener("click", () => showScreen(screens.menu));
-
-    // Bottom Menu Navigation
-    homeBtn.addEventListener("click", () => showScreen(screens.menu));
-    plannerBtn.addEventListener("click", () => showScreen(screens.planner));
-    progressBtn.addEventListener("click", () => showScreen(screens.progress));
-
-    // Exercise Input
-    addExerciseBtn.addEventListener("click", function() {
-        let exerciseName = prompt("Enter exercise name:");
-        let sets = prompt("Enter sets:");
-        let reps = prompt("Enter reps:");
-        let weight = prompt("Enter weight:");
-
-        if (exerciseName && sets && reps && weight) {
-            let exerciseList = document.getElementById("exercise-list");
-            let exerciseDiv = document.createElement("div");
-            exerciseDiv.innerHTML = `<p>${exerciseName} - ${sets} Sets x ${reps} Reps @ ${weight}kg</p>`;
-            exerciseList.appendChild(exerciseDiv);
+    // Add Exercise Button
+    addExerciseBtn.addEventListener("click", () => {
+        const exerciseName = exerciseNameInput.value.trim();
+        if (exerciseName) {
+            const li = document.createElement("li");
+            li.textContent = exerciseName;
+            exerciseList.appendChild(li);
+            exerciseNameInput.value = "";
         }
+    });
+
+    // Back button event
+    backBtn.addEventListener("click", () => {
+        workoutSection.classList.add("hidden");
     });
 });
