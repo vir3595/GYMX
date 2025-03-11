@@ -38,7 +38,7 @@ button {
     flex-grow: 1;
 }
 
-/* Styling for the weekday buttons */
+/* Weekday buttons styling */
 #weekday-list {
     list-style-type: none;
     padding: 0;
