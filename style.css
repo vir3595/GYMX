@@ -5,7 +5,7 @@ body {
     color: #42564F;
     margin: 0;
     padding: 0;
-    background-image: url('your-image-path.jpg'); /* Update with the path to your motivational model workout images */
+    background-image: url('your-image-path.jpg'); /* Update with your motivational image */
     background-size: cover;
     background-position: center;
 }
@@ -13,6 +13,15 @@ body {
 h1, h2 {
     color: #C0EB6A;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Center the content of the welcome screen vertically and horizontally */
+#welcome-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
 button {
@@ -85,10 +94,10 @@ button:hover {
     transition: opacity 0.3s ease;
 }
 
-#notification.fade-out {
-    opacity: 0;
-}
-
 #notification.show {
     opacity: 1;
+}
+
+#notification.fade-out {
+    opacity: 0;
 }
