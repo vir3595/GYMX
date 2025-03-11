@@ -3,11 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const homeScreen = document.getElementById("home-screen");
     const workoutPlannerScreen = document.getElementById("workout-planner-screen");
     const statsScreen = document.getElementById("stats-screen");
-    const navButtons = document.getElementById("nav-buttons");
 
     const startButton = document.getElementById("start-planning");
     const weekdayButtons = document.querySelectorAll(".day-btn");
-    const goToWorkoutPlannerButton = document.getElementById("go-to-workout-planner");
 
     const progressList = document.getElementById("progress-list");
     const todaysWorkoutList = document.getElementById("todays-workout-list");
@@ -21,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         homeScreen.classList.remove("active");
         workoutPlannerScreen.classList.remove("active");
         statsScreen.classList.remove("active");
-        
+
         screen.classList.add("active");
     }
 
