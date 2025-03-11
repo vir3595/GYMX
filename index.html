@@ -17,6 +17,7 @@
     <!-- Main Menu -->
     <div id="main-menu" class="hidden">
         <h2>Select Your Workout Day</h2>
+        <button id="weekly-progress">📅 View Weekly Progress</button>
         <ul id="weekday-list">
             <li><button class="day-btn" data-day="Monday">Monday</button></li>
             <li><button class="day-btn" data-day="Tuesday">Tuesday</button></li>
@@ -26,7 +27,6 @@
             <li><button class="day-btn" data-day="Saturday">Saturday</button></li>
             <li><button class="day-btn" data-day="Sunday">Sunday</button></li>
         </ul>
-        <button id="weekly-progress">📅 View Weekly Progress</button>
         <button id="back-main" class="back-btn">⬅️</button>
     </div>
 
@@ -51,6 +51,9 @@
         <ul id="progress-list"></ul>
         <button id="back-progress" class="back-btn">⬅️</button>
     </div>
+
+    <!-- Notification Pop-up -->
+    <div id="notification" class="hidden"></div>
 
     <script src="script.js"></script>
 </body>
