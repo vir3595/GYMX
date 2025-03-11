@@ -70,4 +70,56 @@ document.addEventListener("DOMContentLoaded", () => {
         if (workouts[selectedDay]) {
             workouts[selectedDay].forEach((exercise, index) => {
                 let li = document.createElement("li");
-                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight}
+                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight} kg`;
+                exerciseList.appendChild(li);
+            });
+        }
+    }
+
+    addExerciseButton.addEventListener("click", () => {
+        const name = document.getElementById("exercise-name").value;
+        const sets = document.getElementById("exercise-sets").value;
+        const reps = document.getElementById("exercise-reps").value;
+        const weight = document.getElementById("exercise-weight").value;
+        if (name && sets && reps && weight) {
+            const exercise = { name, sets, reps, weight };
+            if (!workouts[selectedDay]) {
+                workouts[selectedDay] = [];
+            }
+            workouts[selectedDay].push(exercise);
+            localStorage.setItem("workouts", JSON.stringify(workouts));
+            loadExercises();
+            showNotification("Exercise added!");
+        }
+    });
+
+    saveWorkoutButton.addEventListener("click", () => {
+        showNotification("Workout saved!");
+    });
+
+    function showNotification(message) {
+        notification.textContent = message;
+        notification.classList.remove("hidden");
+        setTimeout(() => {
+            notification.classList.add("hidden");
+        }, 2000);
+    }
+
+    // Bottom navigation logic
+    workoutPlannerBtn.addEventListener("click", () => showScreen(mainMenu));
+    homeBtn.addEventListener("click", () => showScreen(welcomeScreen));
+    statsBtn.addEventListener("click", () => showScreen(progressPage));
+
+    function loadRandomQuote() {
+        const quotes = [
+            "Push yourself, because no one else is going to do it for you.",
+            "The body achieves what the mind believes.",
+            "Success usually comes to those who are too busy to be looking for it."
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        document.getElementById("quote").textContent = randomQuote;
+    }
+
+    // Initialize on welcome page
+    showScreen(welcomeScreen);
+});
