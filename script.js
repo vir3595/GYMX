@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selectedDay = "";
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
+    let currentDay = new Date().toLocaleString('en-us', { weekday: 'long' });
 
     function showScreen(screen) {
         // Hide all screens
@@ -107,7 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Bottom navigation logic
     workoutPlannerBtn.addEventListener("click", () => showScreen(mainMenu));
-    homeBtn.addEventListener("click", () => showScreen(welcomeScreen));
+    homeBtn.addEventListener("click", () => {
+        selectedDay = currentDay;
+        document.getElementById("workout-day-title").textContent = `${selectedDay}'s Workout Plan`;
+        loadExercises();
+        showScreen(workoutPage);
+    });
     statsBtn.addEventListener("click", () => showScreen(progressPage));
 
     function loadRandomQuote() {
