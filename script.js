@@ -1,94 +1,110 @@
-const quotes = [
-    "No pain, no gain!",
-    "Your only limit is you.",
-    "Sweat, smile, repeat.",
-    "Push yourself because no one else will!",
-    "Train insane or remain the same."
-];
+document.addEventListener("DOMContentLoaded", function() {
+    const quotes = [
+        "Push yourself, because no one else will do it for you! 🔥",
+        "It’s a slow process, but quitting won’t speed it up! 💪",
+        "Every rep counts, keep going! 🏋️‍♂️",
+        "Be stronger than your excuses! 🚀",
+        "Your only limit is your mind. Keep pushing! 🏆"
+    ];
+    document.getElementById("motivational-quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
 
-// Display random motivational quote
-document.getElementById("quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
-
-// Screen transitions
-document.getElementById("start-btn").addEventListener("click", () => {
-    document.getElementById("welcome-screen").classList.add("hidden");
-    document.getElementById("weekly-planner").classList.remove("hidden");
-});
-
-// Store workouts
-let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
-
-// Check if it's a new week (Reset Status)
-const lastReset = localStorage.getItem("lastReset");
-const currentWeek = new Date().getWeek();
-if (!lastReset || lastReset < currentWeek) {
-    for (let day in workouts) {
-        workouts[day].forEach(workout => workout.done = false);
-    }
-    localStorage.setItem("workouts", JSON.stringify(workouts));
-    localStorage.setItem("lastReset", currentWeek);
-}
-
-// Handle day button clicks
-document.querySelectorAll(".day-btn").forEach(button => {
-    button.addEventListener("click", () => {
-        const day = button.getAttribute("data-day");
-        loadWorkoutDay(day);
-    });
-});
-
-function loadWorkoutDay(day) {
-    document.getElementById("weekly-planner").classList.add("hidden");
-    document.getElementById("workout-day").classList.remove("hidden");
-    document.getElementById("workout-day-title").innerText = `Workout for ${day}`;
-
-    // Populate workouts
-    const workoutList = document.getElementById("workout-list");
-    workoutList.innerHTML = "";
-
-    (workouts[day] || []).forEach((workout, index) => {
-        let li = document.createElement("li");
-        li.innerHTML = `${workout.exercise} - ${workout.weight}kg x ${workout.reps} 
-                        <button class="done-btn" data-day="${day}" data-index="${index}">
-                            ${workout.done ? "✅" : "❌"}
-                        </button>`;
-        workoutList.appendChild(li);
+    const startButton = document.getElementById("start-planning");
+    const weeklyMenu = document.getElementById("weekly-menu");
+    const workoutPlanner = document.getElementById("workout-planner");
+    const weeklyProgress = document.getElementById("weekly-progress");
+    const progressButton = document.getElementById("progress-button");
+    const backToMainButton = document.getElementById("back-to-main");
+    const backToMenuButton = document.getElementById("back-to-menu");
+    
+    startButton.addEventListener("click", () => {
+        document.getElementById("welcome-screen").classList.add("hidden");
+        weeklyMenu.classList.remove("hidden");
     });
 
-    // Handle workout completion toggle
-    document.querySelectorAll(".done-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
-            const day = this.getAttribute("data-day");
-            const index = this.getAttribute("data-index");
-            workouts[day][index].done = !workouts[day][index].done;
-            localStorage.setItem("workouts", JSON.stringify(workouts));
-            loadWorkoutDay(day); // Refresh UI
+    document.querySelectorAll(".weekday").forEach(button => {
+        button.addEventListener("click", function() {
+            const day = this.dataset.day;
+            document.getElementById("selected-day").innerText = `Workout Plan - ${day}`;
+            workoutPlanner.classList.remove("hidden");
+            weeklyMenu.classList.add("hidden");
+            loadWorkouts(day);
         });
     });
 
-    // Handle adding a workout
-    document.getElementById("add-workout").addEventListener("click", () => {
-        const exercise = document.getElementById("exercise").value;
-        const weight = document.getElementById("weight").value;
-        const reps = document.getElementById("reps").value;
-
-        if (exercise && weight && reps) {
-            workouts[day] = workouts[day] || [];
-            workouts[day].push({ exercise, weight, reps, done: false });
-            localStorage.setItem("workouts", JSON.stringify(workouts));
-            loadWorkoutDay(day);
-        }
+    backToMenuButton.addEventListener("click", () => {
+        workoutPlanner.classList.add("hidden");
+        weeklyMenu.classList.remove("hidden");
     });
-}
 
-// Back button to weekly planner
-document.getElementById("back-btn").addEventListener("click", () => {
-    document.getElementById("workout-day").classList.add("hidden");
-    document.getElementById("weekly-planner").classList.remove("hidden");
+    progressButton.addEventListener("click", () => {
+        weeklyMenu.classList.add("hidden");
+        weeklyProgress.classList.remove("hidden");
+        loadProgress();
+    });
+
+    backToMainButton.addEventListener("click", () => {
+        weeklyProgress.classList.add("hidden");
+        weeklyMenu.classList.remove("hidden");
+    });
+
+    document.getElementById("add-exercise").addEventListener("click", () => {
+        addExercise();
+    });
+
+    function addExercise() {
+        const day = document.getElementById("selected-day").innerText.replace("Workout Plan - ", "");
+        const exercise = document.getElementById("exercise-name").value;
+        const sets = document.getElementById("sets").value;
+        const reps = document.getElementById("reps").value;
+        const weight = document.getElementById("weight").value;
+        if (!exercise || !sets || !reps || !weight) return;
+
+        let workouts = JSON.parse(localStorage.getItem(day)) || [];
+        workouts.push({ exercise, sets, reps, weight, done: false });
+        localStorage.setItem(day, JSON.stringify(workouts));
+
+        loadWorkouts(day);
+    }
+
+    function loadWorkouts(day) {
+        const tbody = document.querySelector("#workout-table tbody");
+        tbody.innerHTML = "";
+        let workouts = JSON.parse(localStorage.getItem(day)) || [];
+        workouts.forEach((workout, index) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${workout.exercise}</td>
+                <td>${workout.sets}</td>
+                <td>${workout.reps}</td>
+                <td>${workout.weight}kg</td>
+                <td><input type="checkbox" ${workout.done ? "checked" : ""} data-index="${index}" data-day="${day}"></td>
+            `;
+            tbody.appendChild(row);
+        });
+
+        document.querySelectorAll("#workout-table input[type='checkbox']").forEach(checkbox => {
+            checkbox.addEventListener("change", function() {
+                let workouts = JSON.parse(localStorage.getItem(this.dataset.day));
+                workouts[this.dataset.index].done = this.checked;
+                localStorage.setItem(this.dataset.day, JSON.stringify(workouts));
+            });
+        });
+    }
+
+    function loadProgress() {
+        let progressContainer = document.getElementById("progress-container");
+        progressContainer.innerHTML = "";
+        let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+        days.forEach(day => {
+            let workouts = JSON.parse(localStorage.getItem(day)) || [];
+            if (workouts.length > 0) {
+                let div = document.createElement("div");
+                div.innerHTML = `<h3>${day}</h3>`;
+                workouts.forEach(workout => {
+                    div.innerHTML += `<p>${workout.exercise} - ${workout.sets} sets x ${workout.reps} reps @ ${workout.weight}kg</p>`;
+                });
+                progressContainer.appendChild(div);
+            }
+        });
+    }
 });
-
-// Get current week number function
-Date.prototype.getWeek = function () {
-    let d = new Date(this.getFullYear(), 0, 1);
-    return Math.ceil((((this - d) / 86400000) + d.getDay() + 1) / 7);
-};
