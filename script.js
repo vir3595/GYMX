@@ -1,85 +1,69 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const screens = {
-        welcome: document.getElementById("welcome-screen"),
-        home: document.getElementById("home-screen"),
-        planner: document.getElementById("planner-screen"),
-        workout: document.getElementById("workout-screen"),
-        stats: document.getElementById("stats-screen"),
-    };
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const appScreen = document.getElementById("app");
 
-    const buttons = {
-        start: document.getElementById("start-planning"),
-        navPlanner: document.getElementById("nav-planner"),
-        navHome: document.getElementById("nav-home"),
-        navStats: document.getElementById("nav-stats"),
-        addExercise: document.getElementById("add-exercise"),
-        saveWorkout: document.getElementById("save-workout"),
-    };
+    const homeScreen = document.getElementById("home-screen");
+    const plannerScreen = document.getElementById("workout-planner");
+    const workoutDayScreen = document.getElementById("workout-day");
+    const statsScreen = document.getElementById("statistics-screen");
 
-    const inputs = {
-        exerciseName: document.getElementById("exercise-name"),
-        exerciseSets: document.getElementById("exercise-sets"),
-        exerciseReps: document.getElementById("exercise-reps"),
-        exerciseWeight: document.getElementById("exercise-weight"),
-    };
+    const startButton = document.getElementById("start-button");
+    const quickStartButton = document.getElementById("quick-start");
 
-    const lists = {
-        weekday: document.getElementById("weekday-list"),
-        exercise: document.getElementById("exercise-list"),
-        todayWorkout: document.getElementById("today-workout-list"),
-        stats: document.getElementById("stats-list"),
-    };
+    const navPlanner = document.getElementById("nav-planner");
+    const navHome = document.getElementById("nav-home");
+    const navStats = document.getElementById("nav-stats");
+
+    const weekdayButtons = document.querySelectorAll(".day-btn");
+    const addExerciseButton = document.getElementById("add-exercise");
+    const saveWorkoutButton = document.getElementById("save-workout");
 
     let selectedDay = "";
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
+    let streak = parseInt(localStorage.getItem("streak")) || 0;
 
     function showScreen(screen) {
-        Object.values(screens).forEach(s => s.classList.add("hidden"));
-        screens[screen].classList.remove("hidden");
+        homeScreen.classList.add("hidden");
+        plannerScreen.classList.add("hidden");
+        workoutDayScreen.classList.add("hidden");
+        statsScreen.classList.add("hidden");
+        screen.classList.remove("hidden");
     }
 
-    buttons.start.addEventListener("click", () => showScreen("home"));
-    buttons.navPlanner.addEventListener("click", () => showScreen("planner"));
-    buttons.navHome.addEventListener("click", () => showScreen("home"));
-    buttons.navStats.addEventListener("click", () => showScreen("stats"));
-
-    lists.weekday.addEventListener("click", (event) => {
-        if (event.target.classList.contains("day-btn")) {
-            selectedDay = event.target.dataset.day;
-            document.getElementById("workout-day-title").textContent = `${selectedDay}'s Workout`;
-            loadExercises();
-            showScreen("workout");
-        }
+    startButton.addEventListener("click", () => {
+        welcomeScreen.classList.add("hidden");
+        appScreen.classList.remove("hidden");
+        showScreen(homeScreen);
     });
 
-    function loadExercises() {
-        lists.exercise.innerHTML = "";
-        if (workouts[selectedDay]) {
-            workouts[selectedDay].forEach((exercise, index) => {
-                let li = document.createElement("li");
-                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight}kg`;
-                let deleteBtn = document.createElement("button");
-                deleteBtn.textContent = "❌";
-                deleteBtn.onclick = () => {
-                    workouts[selectedDay].splice(index, 1);
-                    saveWorkouts();
-                    loadExercises();
-                };
-                li.appendChild(deleteBtn);
-                lists.exercise.appendChild(li);
-            });
-        }
-    }
+    quickStartButton.addEventListener("click", () => showScreen(workoutDayScreen));
 
-    buttons.addExercise.addEventListener("click", () => {
-        const name = inputs.exerciseName.value;
-        const sets = inputs.exerciseSets.value;
-        const reps = inputs.exerciseReps.value;
-        const weight = inputs.exerciseWeight.value;
+    navPlanner.addEventListener("click", () => showScreen(plannerScreen));
+    navHome.addEventListener("click", () => showScreen(homeScreen));
+    navStats.addEventListener("click", () => {
+        showScreen(statsScreen);
+        document.getElementById("streak-count").textContent = streak;
+    });
+
+    weekdayButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            selectedDay = button.dataset.day;
+            document.getElementById("workout-day-title").textContent = `${selectedDay}'s Workout`;
+            showScreen(workoutDayScreen);
+            loadExercises();
+        });
+    });
+
+    addExerciseButton.addEventListener("click", () => {
+        const category = document.getElementById("category").value;
+        const name = document.getElementById("exercise-name").value;
+        const sets = document.getElementById("exercise-sets").value;
+        const reps = document.getElementById("exercise-reps").value;
+        const weight = document.getElementById("exercise-weight").value;
 
         if (name && sets && reps && weight) {
             workouts[selectedDay] = workouts[selectedDay] || [];
-            workouts[selectedDay].push({ name, sets, reps, weight });
+            workouts[selectedDay].push({ category, name, sets, reps, weight });
             saveWorkouts();
             loadExercises();
         }
@@ -87,29 +71,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function saveWorkouts() {
         localStorage.setItem("workouts", JSON.stringify(workouts));
-        showNotification("Workout saved!");
-        updateTodayWorkout();
     }
 
-    function updateTodayWorkout() {
-        const today = new Date().toLocaleString("en-US", { weekday: "long" });
-        lists.todayWorkout.innerHTML = "";
-        if (workouts[today]) {
-            workouts[today].forEach(exercise => {
+    function loadExercises() {
+        const exerciseList = document.getElementById("exercise-list");
+        exerciseList.innerHTML = "";
+        if (workouts[selectedDay]) {
+            workouts[selectedDay].forEach(ex => {
                 let li = document.createElement("li");
-                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps`;
-                lists.todayWorkout.appendChild(li);
+                li.textContent = `${ex.category} - ${ex.name} - ${ex.sets}x${ex.reps} @ ${ex.weight}kg`;
+                exerciseList.appendChild(li);
             });
         }
     }
 
-    function showNotification(message) {
-        const notification = document.createElement("div");
-        notification.className = "notification";
-        notification.textContent = message;
-        document.body.appendChild(notification);
-        setTimeout(() => notification.remove(), 2000);
-    }
-
-    updateTodayWorkout();
+    document.getElementById("streak-count").textContent = streak;
 });
