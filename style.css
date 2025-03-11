@@ -26,6 +26,53 @@ button {
     display: none;
 }
 
+/* Bottom Navigation */
+#bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #42564F;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+}
+
+#bottom-nav button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+ody {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #F7F6E7;
+    color: #42564F;
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2 {
+    color: #C0EB6A;
+}
+
+button {
+    background-color: #42564F;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
 #nav-buttons {
     position: fixed;
     bottom: 0;
