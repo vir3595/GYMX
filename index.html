@@ -4,59 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout Planner</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="script.js"></script>
 </head>
 <body>
+
     <!-- Welcome Screen -->
-    <div id="welcome-screen">
+    <div id="welcomeScreen" class="screen active">
         <h1>Welcome to Your Workout Planner</h1>
-        <p id="quote">Loading...</p>
-        <button id="start-btn">Let's Go</button>
+        <p id="motivationalQuote">Loading...</p>
+        <button id="startButton">Let's Go</button>
     </div>
 
     <!-- Home Screen -->
-    <div id="home-screen" class="hidden">
+    <div id="homeScreen" class="screen">
         <h2>Today's Workout</h2>
-        <ul id="today-workout-list"></ul>
-        <button id="go-to-planner">📅 Plan Workouts</button>
-        <button id="go-to-stats">📊 View Stats</button>
+        <div id="todaysWorkout"></div>
     </div>
 
     <!-- Workout Planner -->
-    <div id="workout-planner" class="hidden">
-        <h2>Select a Day</h2>
-        <ul id="weekday-buttons">
-            <li><button class="day-btn" data-day="Monday">Monday</button></li>
-            <li><button class="day-btn" data-day="Tuesday">Tuesday</button></li>
-            <li><button class="day-btn" data-day="Wednesday">Wednesday</button></li>
-            <li><button class="day-btn" data-day="Thursday">Thursday</button></li>
-            <li><button class="day-btn" data-day="Friday">Friday</button></li>
-            <li><button class="day-btn" data-day="Saturday">Saturday</button></li>
-            <li><button class="day-btn" data-day="Sunday">Sunday</button></li>
-        </ul>
-        <button id="back-to-home">🏠 Home</button>
-    </div>
-
-    <!-- Workout Day Screen -->
-    <div id="workout-day-screen" class="hidden">
-        <h2 id="day-title"></h2>
-        <ul id="exercise-list"></ul>
-        <input type="text" id="exercise-name" placeholder="Exercise Name">
-        <input type="number" id="exercise-sets" placeholder="Sets">
-        <input type="number" id="exercise-reps" placeholder="Reps">
-        <input type="number" id="exercise-weight" placeholder="Weight (kg)">
-        <button id="add-exercise">➕ Add Exercise</button>
-        <button id="save-workout">💾 Save Workout</button>
-        <button id="back-to-planner">🔙 Back</button>
+    <div id="plannerScreen" class="screen">
+        <h2>Workout Planner</h2>
+        <div class="weekday-buttons">
+            <button class="day-btn" data-day="Monday">Monday</button>
+            <button class="day-btn" data-day="Tuesday">Tuesday</button>
+            <button class="day-btn" data-day="Wednesday">Wednesday</button>
+            <button class="day-btn" data-day="Thursday">Thursday</button>
+            <button class="day-btn" data-day="Friday">Friday</button>
+            <button class="day-btn" data-day="Saturday">Saturday</button>
+            <button class="day-btn" data-day="Sunday">Sunday</button>
+        </div>
+        <div id="dayWorkout"></div>
     </div>
 
     <!-- Statistics Screen -->
-    <div id="statistics-screen" class="hidden">
+    <div id="statsScreen" class="screen">
         <h2>Workout Statistics</h2>
-        <ul id="stats-list"></ul>
-        <button id="back-to-home-2">🏠 Home</button>
+        <div id="statsContent">No data yet.</div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Bottom Navigation -->
+    <div id="bottomNav">
+        <button id="plannerNav">📅</button>
+        <button id="homeNav">🏠</button>
+        <button id="statsNav">📊</button>
+    </div>
+
 </body>
 </html>
