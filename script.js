@@ -1,18 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
+    // Screens
     const welcomeScreen = document.getElementById("welcome-screen");
-    const appScreen = document.getElementById("app");
-
     const homeScreen = document.getElementById("home-screen");
-    const plannerScreen = document.getElementById("workout-planner");
-    const workoutDayScreen = document.getElementById("workout-day");
-    const statsScreen = document.getElementById("statistics-screen");
+    const workoutPlanner = document.getElementById("workout-planner");
+    const workoutDayScreen = document.getElementById("workout-day-screen");
+    const statisticsScreen = document.getElementById("statistics-screen");
 
-    const startButton = document.getElementById("start-button");
-    const quickStartButton = document.getElementById("quick-start");
-
-    const navPlanner = document.getElementById("nav-planner");
-    const navHome = document.getElementById("nav-home");
-    const navStats = document.getElementById("nav-stats");
+    // Buttons
+    const startButton = document.getElementById("start-btn");
+    const goToPlanner = document.getElementById("go-to-planner");
+    const goToStats = document.getElementById("go-to-stats");
+    const backToHome = document.getElementById("back-to-home");
+    const backToHome2 = document.getElementById("back-to-home-2");
+    const backToPlanner = document.getElementById("back-to-planner");
 
     const weekdayButtons = document.querySelectorAll(".day-btn");
     const addExerciseButton = document.getElementById("add-exercise");
@@ -20,42 +20,54 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let selectedDay = "";
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
-    let streak = parseInt(localStorage.getItem("streak")) || 0;
 
     function showScreen(screen) {
+        welcomeScreen.classList.add("hidden");
         homeScreen.classList.add("hidden");
-        plannerScreen.classList.add("hidden");
+        workoutPlanner.classList.add("hidden");
         workoutDayScreen.classList.add("hidden");
-        statsScreen.classList.add("hidden");
+        statisticsScreen.classList.add("hidden");
         screen.classList.remove("hidden");
     }
 
-    startButton.addEventListener("click", () => {
-        welcomeScreen.classList.add("hidden");
-        appScreen.classList.remove("hidden");
-        showScreen(homeScreen);
-    });
-
-    quickStartButton.addEventListener("click", () => showScreen(workoutDayScreen));
-
-    navPlanner.addEventListener("click", () => showScreen(plannerScreen));
-    navHome.addEventListener("click", () => showScreen(homeScreen));
-    navStats.addEventListener("click", () => {
-        showScreen(statsScreen);
-        document.getElementById("streak-count").textContent = streak;
-    });
+    // Navigation
+    startButton.addEventListener("click", () => showScreen(homeScreen));
+    goToPlanner.addEventListener("click", () => showScreen(workoutPlanner));
+    goToStats.addEventListener("click", () => showScreen(statisticsScreen));
+    backToHome.addEventListener("click", () => showScreen(homeScreen));
+    backToHome2.addEventListener("click", () => showScreen(homeScreen));
+    backToPlanner.addEventListener("click", () => showScreen(workoutPlanner));
 
     weekdayButtons.forEach(button => {
         button.addEventListener("click", () => {
             selectedDay = button.dataset.day;
-            document.getElementById("workout-day-title").textContent = `${selectedDay}'s Workout`;
-            showScreen(workoutDayScreen);
+            document.getElementById("day-title").textContent = `${selectedDay}'s Workout`;
             loadExercises();
+            showScreen(workoutDayScreen);
         });
     });
 
+    function loadExercises() {
+        const exerciseList = document.getElementById("exercise-list");
+        exerciseList.innerHTML = "";
+        if (workouts[selectedDay]) {
+            workouts[selectedDay].forEach((exercise, index) => {
+                let li = document.createElement("li");
+                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight}kg`;
+                let deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "❌";
+                deleteBtn.onclick = () => {
+                    workouts[selectedDay].splice(index, 1);
+                    saveWorkouts();
+                    loadExercises();
+                };
+                li.appendChild(deleteBtn);
+                exerciseList.appendChild(li);
+            });
+        }
+    }
+
     addExerciseButton.addEventListener("click", () => {
-        const category = document.getElementById("category").value;
         const name = document.getElementById("exercise-name").value;
         const sets = document.getElementById("exercise-sets").value;
         const reps = document.getElementById("exercise-reps").value;
@@ -63,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (name && sets && reps && weight) {
             workouts[selectedDay] = workouts[selectedDay] || [];
-            workouts[selectedDay].push({ category, name, sets, reps, weight });
+            workouts[selectedDay].push({ name, sets, reps, weight });
             saveWorkouts();
             loadExercises();
         }
@@ -73,17 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem("workouts", JSON.stringify(workouts));
     }
 
-    function loadExercises() {
-        const exerciseList = document.getElementById("exercise-list");
-        exerciseList.innerHTML = "";
-        if (workouts[selectedDay]) {
-            workouts[selectedDay].forEach(ex => {
-                let li = document.createElement("li");
-                li.textContent = `${ex.category} - ${ex.name} - ${ex.sets}x${ex.reps} @ ${ex.weight}kg`;
-                exerciseList.appendChild(li);
-            });
-        }
+    function loadRandomQuote() {
+        const quotes = ["Push yourself!", "No pain, no gain!", "Stay consistent!", "Train insane!"];
+        document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
     }
 
-    document.getElementById("streak-count").textContent = streak;
+    loadRandomQuote();
 });
