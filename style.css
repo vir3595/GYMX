@@ -5,10 +5,14 @@ body {
     color: #42564F;
     margin: 0;
     padding: 0;
+    background-image: url('your-image-path.jpg'); /* Update with the path to your motivational model workout images */
+    background-size: cover;
+    background-position: center;
 }
 
 h1, h2 {
     color: #C0EB6A;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 button {
@@ -20,6 +24,11 @@ button {
     cursor: pointer;
     border-radius: 5px;
     font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #C0EB6A;
 }
 
 .hidden {
@@ -37,6 +46,7 @@ button {
 
 .day-btn {
     width: 80%;
+    padding: 12px;
 }
 
 #exercise-list {
@@ -63,7 +73,7 @@ button {
 /* Notification styles */
 #notification {
     position: fixed;
-    top: 10px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     background-color: #4CAF50;
@@ -71,20 +81,14 @@ button {
     padding: 10px;
     border-radius: 5px;
     font-size: 16px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 1;
-    transition: opacity 0.5s ease-out;
-    z-index: 9999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 #notification.fade-out {
     opacity: 0;
 }
 
-/* Chart container style */
-#progress-chart {
-    margin-top: 20px;
-    max-width: 100%;
-    width: 400px;
-    height: 200px;
+#notification.show {
+    opacity: 1;
 }
