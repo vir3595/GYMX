@@ -16,6 +16,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveWorkoutButton = document.getElementById("save-workout");
     const notification = document.getElementById("notification");
 
+    const workoutPlannerBtn = document.getElementById("workout-planner-btn");
+    const homeBtn = document.getElementById("home-btn");
+    const statsBtn = document.getElementById("stats-btn");
+
     let selectedDay = "";
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
 
@@ -66,55 +70,4 @@ document.addEventListener("DOMContentLoaded", () => {
         if (workouts[selectedDay]) {
             workouts[selectedDay].forEach((exercise, index) => {
                 let li = document.createElement("li");
-                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight}kg`;
-                let deleteBtn = document.createElement("button");
-                deleteBtn.textContent = "❌";
-                deleteBtn.onclick = () => {
-                    workouts[selectedDay].splice(index, 1);
-                    saveWorkouts();
-                    loadExercises();
-                };
-                li.appendChild(deleteBtn);
-                exerciseList.appendChild(li);
-            });
-        }
-    }
-
-    addExerciseButton.addEventListener("click", () => {
-        const name = document.getElementById("exercise-name").value;
-        const sets = document.getElementById("exercise-sets").value;
-        const reps = document.getElementById("exercise-reps").value;
-        const weight = document.getElementById("exercise-weight").value;
-
-        if (name && sets && reps && weight) {
-            workouts[selectedDay] = workouts[selectedDay] || [];
-            workouts[selectedDay].push({ name, sets, reps, weight });
-            saveWorkouts();
-            loadExercises();
-            showNotification("Exercise added!");
-        }
-    });
-
-    saveWorkoutButton.addEventListener("click", () => {
-        showNotification("Workout saved!");
-    });
-
-    function saveWorkouts() {
-        localStorage.setItem("workouts", JSON.stringify(workouts));
-    }
-
-    function loadRandomQuote() {
-        const quotes = ["Push yourself!", "No pain, no gain!", "Stay consistent!", "Train insane!"];
-        document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
-    }
-
-    function showNotification(message) {
-        notification.textContent = message;
-        notification.classList.remove("hidden");
-        setTimeout(() => {
-            notification.classList.add("hidden");
-        }, 2000);
-    }
-
-    loadRandomQuote();
-});
+                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight}
