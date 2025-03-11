@@ -14,23 +14,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const exerciseList = document.getElementById("exercise-list");
     const addExerciseButton = document.getElementById("add-exercise");
     const saveWorkoutButton = document.getElementById("save-workout");
-
-    const notification = document.createElement('div');
-    notification.id = 'notification';
-    document.body.appendChild(notification);
+    const notification = document.getElementById("notification");
 
     let selectedDay = "";
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
 
     function showScreen(screen) {
+        // Hide all screens
         welcomeScreen.classList.add("hidden");
         mainMenu.classList.add("hidden");
         workoutPage.classList.add("hidden");
         progressPage.classList.add("hidden");
+        
+        // Show the selected screen
         screen.classList.remove("hidden");
     }
 
-    startButton.addEventListener("click", () => showScreen(mainMenu));
+    startButton.addEventListener("click", () => {
+        showScreen(mainMenu);
+        loadRandomQuote();
+    });
+
     backToMain.addEventListener("click", () => showScreen(mainMenu));
     backToWeek.addEventListener("click", () => showScreen(mainMenu));
     backToProgress.addEventListener("click", () => showScreen(mainMenu));
@@ -40,9 +44,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const progressList = document.getElementById("progress-list");
         progressList.innerHTML = "";
         for (const day in workouts) {
-            let li = document.createElement("li");
-            li.textContent = `${day}: ${workouts[day].length} exercises`;
-            progressList.appendChild(li);
+            if (workouts[day].length > 0) {
+                let li = document.createElement("li");
+                li.textContent = `${day}: ${workouts[day].length} exercises`;
+                progressList.appendChild(li);
+            }
         }
     });
 
@@ -65,7 +71,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleteBtn.textContent = "❌";
                 deleteBtn.onclick = () => {
                     workouts[selectedDay].splice(index, 1);
-                    localStorage.setItem("workouts", JSON.stringify(workouts));
+                    saveWorkouts();
                     loadExercises();
                 };
                 li.appendChild(deleteBtn);
@@ -81,29 +87,33 @@ document.addEventListener("DOMContentLoaded", () => {
         const weight = document.getElementById("exercise-weight").value;
 
         if (name && sets && reps && weight) {
-            if (!workouts[selectedDay]) workouts[selectedDay] = [];
+            workouts[selectedDay] = workouts[selectedDay] || [];
             workouts[selectedDay].push({ name, sets, reps, weight });
-            localStorage.setItem("workouts", JSON.stringify(workouts));
+            saveWorkouts();
             loadExercises();
-            showNotification("Exercise Added!");
+            showNotification("Exercise added!");
         }
     });
 
     saveWorkoutButton.addEventListener("click", () => {
-        showNotification("Workout Saved!");
+        showNotification("Workout saved!");
     });
+
+    function saveWorkouts() {
+        localStorage.setItem("workouts", JSON.stringify(workouts));
+    }
+
+    function loadRandomQuote() {
+        const quotes = ["Push yourself!", "No pain, no gain!", "Stay consistent!", "Train insane!"];
+        document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+    }
 
     function showNotification(message) {
         notification.textContent = message;
         notification.classList.remove("hidden");
-        setTimeout(() => notification.classList.add("show"), 10);
-        setTimeout(() => notification.classList.remove("show"), 3000);
-    }
-
-    // Function to load random quote for the welcome screen
-    function loadRandomQuote() {
-        const quotes = ["Push yourself!", "No pain, no gain!", "Stay consistent!", "Train insane!"];
-        document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+        setTimeout(() => {
+            notification.classList.add("hidden");
+        }, 2000);
     }
 
     loadRandomQuote();
