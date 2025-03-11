@@ -26,15 +26,17 @@ button {
     display: none;
 }
 
-#weekday-list {
+#weekday-buttons {
     list-style-type: none;
     padding: 0;
 }
 
-#weekday-list button {
-    display: block;
+#weekday-buttons li {
+    margin: 10px 0;
+}
+
+.day-btn {
     width: 80%;
-    margin: 10px auto;
 }
 
 #exercise-list {
@@ -51,31 +53,9 @@ button {
     justify-content: space-between;
 }
 
-#bottom-nav {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    background-color: #42564F;
-    padding: 10px;
-    display: flex;
-    justify-content: space-around;
-}
-
-#bottom-nav button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.notification {
+#back-to-home, #back-to-home-2, #back-to-planner {
     position: fixed;
     bottom: 20px;
-    right: 20px;
-    background: #C0EB6A;
-    color: black;
-    padding: 10px;
-    border-radius: 5px;
-    display: none;
+    left: 20px;
+    font-size: 18px;
 }
