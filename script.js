@@ -85,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
             workouts[selectedDay].push({ name, sets, reps, weight });
             localStorage.setItem("workouts", JSON.stringify(workouts));
             loadExercises();
+            showNotification("Exercise Added!");
         }
     });
 
@@ -98,4 +99,12 @@ document.addEventListener("DOMContentLoaded", () => {
         setTimeout(() => notification.classList.add("show"), 10);
         setTimeout(() => notification.classList.remove("show"), 3000);
     }
+
+    // Function to load random quote for the welcome screen
+    function loadRandomQuote() {
+        const quotes = ["Push yourself!", "No pain, no gain!", "Stay consistent!", "Train insane!"];
+        document.getElementById("quote").textContent = quotes[Math.floor(Math.random() * quotes.length)];
+    }
+
+    loadRandomQuote();
 });
