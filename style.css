@@ -1,35 +1,43 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
+    margin: 0;
+    padding: 0;
     background-color: #F7F6E7;
+}
+
+.screen {
+    display: none;
+    padding: 20px;
 }
 
 .hidden {
     display: none;
 }
 
-.screen {
-    padding: 20px;
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+    background-color: #C0EB6A;
+    color: #42564F;
 }
 
-.bottom-nav {
+#bottom-nav {
     position: fixed;
     bottom: 0;
-    left: 0;
     width: 100%;
     display: flex;
     justify-content: space-around;
-    background: #42564F;
+    background-color: #42564F;
     padding: 10px;
 }
 
-.page {
-    margin-top: 60px;
-}
-
-button {
-    background: #C0EB6A;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
+#bottom-nav button {
+    background: none;
+    color: white;
+    font-size: 24px;
 }
