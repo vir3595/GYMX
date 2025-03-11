@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const welcomeScreen = document.getElementById("welcome-screen");
-    const mainMenu = document.getElementById("main-menu");
+    const homeScreen = document.getElementById("home-screen");
+    const workoutPlannerScreen = document.getElementById("workout-planner-screen");
     const workoutPage = document.getElementById("workout-page");
     const progressPage = document.getElementById("progress-page");
 
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const backToWeek = document.getElementById("back-week");
     const backToProgress = document.getElementById("back-progress");
     const progressButton = document.getElementById("weekly-progress");
+    const homeToWorkout = document.getElementById("home-to-workout");
 
     const exerciseList = document.getElementById("exercise-list");
     const addExerciseButton = document.getElementById("add-exercise");
@@ -24,39 +26,31 @@ document.addEventListener("DOMContentLoaded", () => {
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
     let currentDay = new Date().toLocaleString('en-us', { weekday: 'long' });
 
+    // Show the desired screen
     function showScreen(screen) {
         // Hide all screens
         welcomeScreen.classList.add("hidden");
-        mainMenu.classList.add("hidden");
+        homeScreen.classList.add("hidden");
+        workoutPlannerScreen.classList.add("hidden");
         workoutPage.classList.add("hidden");
         progressPage.classList.add("hidden");
-        
+
         // Show the selected screen
         screen.classList.remove("hidden");
     }
 
+    // Welcome Screen -> Home Page transition
     startButton.addEventListener("click", () => {
-        showScreen(mainMenu);
-        loadRandomQuote();
+        showScreen(homeScreen);
+        loadTodaysWorkout();
     });
 
-    backToMain.addEventListener("click", () => showScreen(mainMenu));
-    backToWeek.addEventListener("click", () => showScreen(mainMenu));
-    backToProgress.addEventListener("click", () => showScreen(mainMenu));
-
-    progressButton.addEventListener("click", () => {
-        showScreen(progressPage);
-        const progressList = document.getElementById("progress-list");
-        progressList.innerHTML = "";
-        for (const day in workouts) {
-            if (workouts[day].length > 0) {
-                let li = document.createElement("li");
-                li.textContent = `${day}: ${workouts[day].length} exercises`;
-                progressList.appendChild(li);
-            }
-        }
+    // Home Page -> Workout Planner transition
+    homeToWorkout.addEventListener("click", () => {
+        showScreen(workoutPlannerScreen);
     });
 
+    // Workout Planner to Workout Page transition
     weekdayButtons.forEach(button => {
         button.addEventListener("click", () => {
             selectedDay = button.dataset.day;
@@ -66,6 +60,20 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    // Load Today's Workout on Home Screen
+    function loadTodaysWorkout() {
+        const todaysWorkout = workouts[currentDay] || [];
+        let workoutText = "No workout scheduled for today.";
+        if (todaysWorkout.length > 0) {
+            workoutText = "Your workout for today: ";
+            todaysWorkout.forEach(exercise => {
+                workoutText += `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps, `;
+            });
+        }
+        document.getElementById("todays-workout").textContent = workoutText;
+    }
+
+    // Load exercises for the selected day
     function loadExercises() {
         exerciseList.innerHTML = "";
         if (workouts[selectedDay]) {
@@ -77,6 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Add exercise
     addExerciseButton.addEventListener("click", () => {
         const name = document.getElementById("exercise-name").value;
         const sets = document.getElementById("exercise-sets").value;
@@ -94,10 +103,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
+    // Save workout
     saveWorkoutButton.addEventListener("click", () => {
         showNotification("Workout saved!");
     });
 
+    // Show notification
     function showNotification(message) {
         notification.textContent = message;
         notification.classList.remove("hidden");
@@ -106,26 +117,32 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2000);
     }
 
-    // Bottom navigation logic
-    workoutPlannerBtn.addEventListener("click", () => showScreen(mainMenu));
-    homeBtn.addEventListener("click", () => {
-        selectedDay = currentDay;
-        document.getElementById("workout-day-title").textContent = `${selectedDay}'s Workout Plan`;
-        loadExercises();
-        showScreen(workoutPage);
+    // Back button functionality
+    backToMain.addEventListener("click", () => showScreen(homeScreen));
+    backToWeek.addEventListener("click", () => showScreen(workoutPlannerScreen));
+    backToProgress.addEventListener("click", () => showScreen(progressPage));
+
+    // Toggle menu buttons
+    workoutPlannerBtn.addEventListener("click", () => {
+        showScreen(workoutPlannerScreen);
     });
-    statsBtn.addEventListener("click", () => showScreen(progressPage));
+    homeBtn.addEventListener("click", () => {
+        showScreen(homeScreen);
+    });
+    statsBtn.addEventListener("click", () => {
+        showScreen(progressPage);
+    });
 
-    function loadRandomQuote() {
-        const quotes = [
-            "Push yourself, because no one else is going to do it for you.",
-            "The body achieves what the mind believes.",
-            "Success usually comes to those who are too busy to be looking for it."
-        ];
-        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-        document.getElementById("quote").textContent = randomQuote;
-    }
+    // Weekly progress page - simple view
+    progressButton.addEventListener("click", () => {
+        let progressHtml = "";
+        for (let day in workouts) {
+            progressHtml += `<li>${day}: ${workouts[day].length} exercises</li>`;
+        }
+        document.getElementById("progress-list").innerHTML = progressHtml;
+        showScreen(progressPage);
+    });
 
-    // Initialize on welcome page
+    // Start with the welcome screen
     showScreen(welcomeScreen);
 });
