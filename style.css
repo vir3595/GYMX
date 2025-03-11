@@ -1,13 +1,11 @@
 body {
     font-family: Arial, sans-serif;
     text-align: center;
-    background-color: #42564F;
-    color: #F7F6E7;
     margin: 0;
     padding: 0;
+    background-color: #F7F6E7;
 }
 
-/* Screens */
 .screen {
     display: none;
     padding: 20px;
@@ -17,41 +15,29 @@ body {
     display: none;
 }
 
-/* Buttons */
 button {
-    background-color: #C0EB6A;
-    border: none;
     padding: 10px 20px;
+    font-size: 16px;
     margin: 5px;
-    border-radius: 5px;
     cursor: pointer;
-    transition: 0.3s;
+    border-radius: 5px;
+    border: none;
+    background-color: #C0EB6A;
+    color: #42564F;
 }
 
-button:hover {
-    background-color: #A8D858;
-}
-
-/* Day Buttons */
-.day-btn {
-    display: block;
-    text-align: left;
-    width: 80%;
-    margin: 5px auto;
-}
-
-/* Bottom Menu */
-#bottom-menu {
+#bottom-nav {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: #DFDDCS;
-    padding: 10px;
     display: flex;
     justify-content: space-around;
+    background-color: #42564F;
+    padding: 10px;
 }
 
-#bottom-menu button {
+#bottom-nav button {
     background: none;
-    font-size: 20px;
+    color: white;
+    font-size: 24px;
 }
