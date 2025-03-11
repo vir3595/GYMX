@@ -15,7 +15,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const addExerciseButton = document.getElementById("add-exercise");
     const saveWorkoutButton = document.getElementById("save-workout");
 
-    const notification = document.getElementById("notification");
+    const notification = document.createElement('div');
+    notification.id = 'notification';
+    document.body.appendChild(notification);
 
     let selectedDay = "";
     let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
@@ -38,38 +40,10 @@ document.addEventListener("DOMContentLoaded", () => {
         const progressList = document.getElementById("progress-list");
         progressList.innerHTML = "";
         for (const day in workouts) {
-            if (workouts[day].length > 0) {
-                let li = document.createElement("li");
-                li.textContent = `${day}: ${workouts[day].length} exercises`;
-                progressList.appendChild(li);
-            }
+            let li = document.createElement("li");
+            li.textContent = `${day}: ${workouts[day].length} exercises`;
+            progressList.appendChild(li);
         }
-
-        // Chart.js to show workout progress
-        const ctx = document.getElementById("progress-chart").getContext("2d");
-        const chartData = {
-            labels: Object.keys(workouts),
-            datasets: [{
-                label: 'Number of Exercises Completed',
-                data: Object.values(workouts).map(dayWorkouts => dayWorkouts.length),
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        };
-
-        const progressChart = new Chart(ctx, {
-            type: 'bar',
-            data: chartData,
-            options: {
-                responsive: true,
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
     });
 
     weekdayButtons.forEach(button => {
@@ -121,7 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function showNotification(message) {
         notification.textContent = message;
         notification.classList.remove("hidden");
-        setTimeout(() => notification.classList.add("fade-out"), 3000);
-        setTimeout(() => notification.classList.add("hidden"), 3500);
+        setTimeout(() => notification.classList.add("show"), 10);
+        setTimeout(() => notification.classList.remove("show"), 3000);
     }
 });
