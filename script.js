@@ -1,3 +1,14 @@
+const quotes = [
+    "No pain, no gain!",
+    "Your only limit is you.",
+    "Sweat, smile, repeat.",
+    "Push yourself because no one else will!",
+    "Train insane or remain the same."
+];
+
+// Display random motivational quote
+document.getElementById("quote").innerText = quotes[Math.floor(Math.random() * quotes.length)];
+
 document.addEventListener("DOMContentLoaded", () => {
     const welcomeScreen = document.getElementById("welcome-screen");
     const homeScreen = document.getElementById("home-screen");
