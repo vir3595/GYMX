@@ -1,39 +1,90 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const welcomeScreen = document.getElementById('welcome-screen');
-    const homeScreen = document.getElementById('home-screen');
-    const workoutPlannerScreen = document.getElementById('workout-planner-screen');
-    const statsScreen = document.getElementById('stats-screen');
+document.addEventListener("DOMContentLoaded", () => {
+    const welcomeScreen = document.getElementById("welcome-screen");
+    const homeScreen = document.getElementById("home-screen");
+    const workoutPlannerScreen = document.getElementById("workout-planner-screen");
+    const statsScreen = document.getElementById("stats-screen");
+    const navButtons = document.getElementById("nav-buttons");
 
-    const homeBtn = document.getElementById('home-btn');
-    const workoutPlannerBtn = document.getElementById('workout-planner-btn');
-    const statsBtn = document.getElementById('stats-btn');
-    const startPlanningBtn = document.getElementById('start-planning');
+    const startButton = document.getElementById("start-planning");
+    const weekdayButtons = document.querySelectorAll(".day-btn");
+    const goToWorkoutPlannerButton = document.getElementById("go-to-workout-planner");
 
-    // Function to show a specific screen
+    const progressList = document.getElementById("progress-list");
+    const todaysWorkoutList = document.getElementById("todays-workout-list");
+
+    let selectedDay = "";
+    let workouts = JSON.parse(localStorage.getItem("workouts")) || {};
+
+    // Show specific screen
     function showScreen(screen) {
-        const screens = [welcomeScreen, homeScreen, workoutPlannerScreen, statsScreen];
-        screens.forEach(s => s.classList.add('hidden')); // Hide all screens
-        screen.classList.remove('hidden'); // Show the requested screen
+        welcomeScreen.classList.remove("active");
+        homeScreen.classList.remove("active");
+        workoutPlannerScreen.classList.remove("active");
+        statsScreen.classList.remove("active");
+        
+        screen.classList.add("active");
     }
 
-    // Event listener for the start planning button
-    startPlanningBtn.addEventListener('click', function() {
-        showScreen(homeScreen); // Go to the home screen after the welcome screen
+    // Welcome screen -> Home screen
+    startButton.addEventListener("click", () => {
+        showScreen(homeScreen);
+        loadTodaysWorkout();
     });
 
-    // Event listeners for bottom navigation buttons
-    homeBtn.addEventListener('click', function() {
-        showScreen(homeScreen); // Show Home Screen
+    // Show the selected workout day screen
+    weekdayButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            selectedDay = button.dataset.day;
+            loadExercises();
+            showScreen(workoutPlannerScreen);
+        });
     });
 
-    workoutPlannerBtn.addEventListener('click', function() {
-        showScreen(workoutPlannerScreen); // Show Workout Planner Screen
+    // Load today's workout
+    function loadTodaysWorkout() {
+        todaysWorkoutList.innerHTML = "";
+        const today = new Date().toLocaleString("en-us", { weekday: "long" });
+        if (workouts[today]) {
+            workouts[today].forEach(exercise => {
+                let li = document.createElement("li");
+                li.textContent = `${exercise.name} - ${exercise.sets} sets x ${exercise.reps} reps @ ${exercise.weight}kg`;
+                todaysWorkoutList.appendChild(li);
+            });
+        } else {
+            todaysWorkoutList.innerHTML = "<li>No workout planned for today.</li>";
+        }
+    }
+
+    // Load exercises for selected day
+    function loadExercises() {
+        // For now, just log the selected day. This can be enhanced to show detailed exercises later
+        console.log(`Exercises for ${selectedDay}:`, workouts[selectedDay]);
+    }
+
+    // Show stats screen
+    function loadStats() {
+        progressList.innerHTML = "";
+        for (const day in workouts) {
+            if (workouts[day].length > 0) {
+                let li = document.createElement("li");
+                li.textContent = `${day}: ${workouts[day].length} exercises`;
+                progressList.appendChild(li);
+            }
+        }
+    }
+
+    // Navigation button click handlers
+    document.getElementById("home-btn").addEventListener("click", () => {
+        showScreen(homeScreen);
+        loadTodaysWorkout();
     });
 
-    statsBtn.addEventListener('click', function() {
-        showScreen(statsScreen); // Show Stats Screen
+    document.getElementById("workout-planner-btn").addEventListener("click", () => {
+        showScreen(workoutPlannerScreen);
     });
 
-    // Initially show the welcome screen
-    showScreen(welcomeScreen);
+    document.getElementById("stats-btn").addEventListener("click", () => {
+        showScreen(statsScreen);
+        loadStats();
+    });
 });
