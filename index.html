@@ -3,27 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Workout Plan</title>
+    <title>Workout Planner</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
+
     <!-- Welcome Screen -->
     <div id="welcome-screen">
-        <h1>🏋️ Welcome to Your Workout Planner!</h1>
+        <h1>🏋️ Welcome!</h1>
         <p id="quote">Loading motivational quote...</p>
         <button id="start-planning">Let's Go</button>
     </div>
 
-    <!-- Home Page (Today's Workout) -->
-    <div id="home-page" class="hidden">
+    <!-- Home Screen -->
+    <div id="home-screen" class="hidden">
         <h2>Today's Workout</h2>
-        <ul id="today-workout"></ul>
+        <ul id="today-workout-list"></ul>
     </div>
 
     <!-- Workout Planner -->
-    <div id="planner-page" class="hidden">
-        <h2>Select Your Workout Day</h2>
+    <div id="planner-screen" class="hidden">
+        <h2>Select Workout Day</h2>
         <ul id="weekday-list">
             <li><button class="day-btn" data-day="Monday">Monday</button></li>
             <li><button class="day-btn" data-day="Tuesday">Tuesday</button></li>
@@ -35,19 +36,32 @@
         </ul>
     </div>
 
-    <!-- Statistics Page -->
-    <div id="stats-page" class="hidden">
-        <h2>📊 Weekly Progress</h2>
-        <ul id="progress-list"></ul>
+    <!-- Workout Editor -->
+    <div id="workout-screen" class="hidden">
+        <h2 id="workout-day-title"></h2>
+        <div>
+            <input type="text" id="exercise-name" placeholder="Exercise">
+            <input type="number" id="exercise-sets" placeholder="Sets">
+            <input type="number" id="exercise-reps" placeholder="Reps">
+            <input type="number" id="exercise-weight" placeholder="Weight (kg)">
+            <button id="add-exercise">➕ Add</button>
+        </div>
+        <ul id="exercise-list"></ul>
+        <button id="save-workout">💾 Save</button>
+    </div>
+
+    <!-- Statistics Screen -->
+    <div id="stats-screen" class="hidden">
+        <h2>📊 Workout Stats</h2>
+        <ul id="stats-list"></ul>
     </div>
 
     <!-- Bottom Navigation -->
     <div id="bottom-nav">
-        <button id="nav-planner"><i class="fas fa-calendar-alt"></i></button>
-        <button id="nav-home"><i class="fas fa-home"></i></button>
-        <button id="nav-stats"><i class="fas fa-chart-bar"></i></button>
+        <button id="nav-planner">📅</button>
+        <button id="nav-home">🏠</button>
+        <button id="nav-stats">📊</button>
     </div>
 
-    <script src="script.js"></script>
 </body>
 </html>
