@@ -3,24 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Workout App</title>
+    <title>My Workout Plan</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Welcome Screen -->
+    <!-- Navigation Buttons -->
+    <div id="nav-buttons">
+        <button id="home-btn">🏠 Home</button>
+        <button id="workout-planner-btn">📅 Workout Planner</button>
+        <button id="stats-btn">📊 Stats</button>
+    </div>
+
+    <!-- Welcome Page -->
     <div id="welcome-screen" class="screen">
         <h1>🏋️ Welcome to Your Workout Planner!</h1>
         <p id="quote">Loading motivational quote...</p>
         <button id="start-planning">Start Planning</button>
     </div>
 
-    <!-- Home Screen (Today's Workout) -->
+    <!-- Home Page -->
     <div id="home-screen" class="screen hidden">
         <h2>Today's Workout</h2>
-        <p id="todays-workout">Loading Today's Workout...</p>
+        <ul id="todays-workout-list"></ul>
+        <button id="go-to-workout-planner">Go to Planner</button>
     </div>
 
-    <!-- Workout Planner Screen -->
+    <!-- Workout Planner Page -->
     <div id="workout-planner-screen" class="screen hidden">
         <h2>Select Your Workout Day</h2>
         <ul id="weekday-list">
@@ -34,17 +42,10 @@
         </ul>
     </div>
 
-    <!-- Stats Screen -->
+    <!-- Stats Page -->
     <div id="stats-screen" class="screen hidden">
-        <h2>Stats Overview</h2>
-        <p>Your workout stats will be displayed here.</p>
-    </div>
-
-    <!-- Bottom Navigation Menu -->
-    <div id="bottom-nav" class="bottom-nav">
-        <button id="home-btn" class="nav-btn">🏠</button>
-        <button id="workout-planner-btn" class="nav-btn">📝</button>
-        <button id="stats-btn" class="nav-btn">📊</button>
+        <h2>Weekly Stats</h2>
+        <ul id="progress-list"></ul>
     </div>
 
     <script src="script.js"></script>
