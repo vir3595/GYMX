@@ -7,15 +7,22 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Welcome Page -->
+    <!-- Welcome Screen -->
     <div id="welcome-screen" class="screen">
         <h1>🏋️ Welcome to Your Workout Planner!</h1>
         <p id="quote">Loading motivational quote...</p>
         <button id="start-planning">Start Planning</button>
     </div>
 
-    <!-- Main Menu -->
-    <div id="main-menu" class="screen hidden">
+    <!-- Home Page (Today's Workout) -->
+    <div id="home-screen" class="screen hidden">
+        <h2>Today's Workout</h2>
+        <p id="todays-workout">Loading Today's Workout...</p>
+        <button id="home-to-workout">Go to Workout Planner</button>
+    </div>
+
+    <!-- Workout Planner Screen -->
+    <div id="workout-planner-screen" class="screen hidden">
         <h2>Select Your Workout Day</h2>
         <button id="weekly-progress">📅 View Weekly Progress</button>
         <ul id="weekday-list">
