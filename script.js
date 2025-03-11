@@ -91,3 +91,37 @@ document.addEventListener("DOMContentLoaded", () => {
                 deleteBtn.textContent = "❌";
                 deleteBtn.onclick = () => {
                     workouts[selectedDay].splice(index, 1);
+                    localStorage.setItem("workouts", JSON.stringify(workouts));
+                    loadExercises();
+                };
+                li.appendChild(deleteBtn);
+                exerciseList.appendChild(li);
+            });
+        }
+    }
+
+    addExerciseButton.addEventListener("click", () => {
+        const name = document.getElementById("exercise-name").value;
+        const sets = document.getElementById("exercise-sets").value;
+        const reps = document.getElementById("exercise-reps").value;
+        const weight = document.getElementById("exercise-weight").value;
+
+        if (name && sets && reps && weight) {
+            if (!workouts[selectedDay]) workouts[selectedDay] = [];
+            workouts[selectedDay].push({ name, sets, reps, weight });
+            localStorage.setItem("workouts", JSON.stringify(workouts));
+            loadExercises();
+        }
+    });
+
+    saveWorkoutButton.addEventListener("click", () => {
+        showNotification("Workout Saved!");
+    });
+
+    function showNotification(message) {
+        notification.textContent = message;
+        notification.classList.remove("hidden");
+        setTimeout(() => notification.classList.add("fade-out"), 3000);
+        setTimeout(() => notification.classList.add("hidden"), 3500);
+    }
+});
