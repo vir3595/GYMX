@@ -1,11 +1,10 @@
 body {
     font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #F7F6E7;
+    color: #42564F;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    background-color: #F7F6E7;
 }
 
 h1, h2 {
@@ -27,30 +26,56 @@ button {
     display: none;
 }
 
-.screen {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-}
-
-/* Bottom Navigation Bar */
-#bottom-nav {
-    display: flex;
-    justify-content: space-around;
+#nav-buttons {
     position: fixed;
-    bottom: 0;
-    width: 100%;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
     background-color: #42564F;
-    padding: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
 }
 
-.nav-btn {
-    background: none;
-    color: white;
-    border: none;
-    text-align: center;
-    font-size: 20px;
-    cursor: pointer;
+#nav-buttons button {
+    margin: 5px;
+}
+
+.screen {
+    display: none;
+    padding: 20px;
+}
+
+.screen.active {
+    display: block;
+}
+
+#weekday-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#weekday-list li {
+    margin: 10px 0;
+}
+
+.day-btn {
+    width: 80%;
+}
+
+#progress-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#progress-list li {
+    margin: 10px;
+}
+
+#quote {
+    font-style: italic;
+}
+
+button:focus {
+    outline: none;
 }
