@@ -31,34 +31,51 @@ button {
     padding: 0;
 }
 
-.day-btn {
+#weekday-list button {
+    display: block;
     width: 80%;
+    margin: 10px auto;
 }
 
-.notification {
-    position: fixed;
-    bottom: 10%;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #C0EB6A;
-    color: #42564F;
+#exercise-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+#exercise-list li {
+    background: white;
+    margin: 10px;
     padding: 10px;
     border-radius: 5px;
-    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
 }
 
 #bottom-nav {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background: #42564F;
+    background-color: #42564F;
+    padding: 10px;
     display: flex;
     justify-content: space-around;
-    padding: 10px;
 }
 
 #bottom-nav button {
-    font-size: 20px;
     background: none;
     border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #C0EB6A;
+    color: black;
+    padding: 10px;
+    border-radius: 5px;
+    display: none;
 }
