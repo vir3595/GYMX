@@ -5,24 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Workout Plan</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </head>
 <body>
-    <!-- Welcome Page -->
-    <div id="welcome-screen" class="screen active">
+    <!-- Welcome Screen -->
+    <div id="welcome-screen">
         <h1>🏋️ Welcome to Your Workout Planner!</h1>
         <p id="quote">Loading motivational quote...</p>
-        <button id="start-planning">Start Planning</button>
+        <button id="start-planning">Let's Go</button>
     </div>
 
-    <!-- Home Page -->
-    <div id="home-screen" class="screen">
+    <!-- Home Page (Today's Workout) -->
+    <div id="home-page" class="hidden">
         <h2>Today's Workout</h2>
-        <ul id="todays-workout-list"></ul>
-        <button id="go-to-workout-planner">Go to Planner</button>
+        <ul id="today-workout"></ul>
     </div>
 
-    <!-- Workout Planner Page -->
-    <div id="workout-planner-screen" class="screen">
+    <!-- Workout Planner -->
+    <div id="planner-page" class="hidden">
         <h2>Select Your Workout Day</h2>
         <ul id="weekday-list">
             <li><button class="day-btn" data-day="Monday">Monday</button></li>
@@ -35,17 +35,17 @@
         </ul>
     </div>
 
-    <!-- Stats Page -->
-    <div id="stats-screen" class="screen">
-        <h2>Weekly Stats</h2>
+    <!-- Statistics Page -->
+    <div id="stats-page" class="hidden">
+        <h2>📊 Weekly Progress</h2>
         <ul id="progress-list"></ul>
     </div>
 
-    <!-- Navigation Buttons (at bottom) -->
-    <div id="nav-buttons">
-        <button id="home-btn">🏠 Home</button>
-        <button id="workout-planner-btn">📅 Workout Planner</button>
-        <button id="stats-btn">📊 Stats</button>
+    <!-- Bottom Navigation -->
+    <div id="bottom-nav">
+        <button id="nav-planner"><i class="fas fa-calendar-alt"></i></button>
+        <button id="nav-home"><i class="fas fa-home"></i></button>
+        <button id="nav-stats"><i class="fas fa-chart-bar"></i></button>
     </div>
 
     <script src="script.js"></script>
